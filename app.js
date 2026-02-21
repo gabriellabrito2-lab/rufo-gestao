@@ -177,8 +177,8 @@ async function renderCategoriasAdmin() {
             <td><strong>${cat.nome}</strong></td>
             <td><span class="badge ${cat.tipo==='receita'?'badge-success':'badge-warning'}">${cat.tipo === 'receita' ? '💰 Receita' : '💸 Despesa'}</span></td>
             <td>
-                <button class="btn-sm btn-sm-edit" onclick="editarCategoria('${cat.id}')">✏️</button>
-                <button class="btn-sm btn-sm-danger" onclick="excluirCategoria('${cat.id}', '${cat.nome}')">🗑️</button>
+                <button class="btn-sm btn-sm-edit" onclick="window.editarCategoria('${cat.id}')">✏️</button>
+                <button class="btn-sm btn-sm-danger" onclick="window.excluirCategoria('${cat.id}', '${cat.nome}')">🗑️</button>
             </td>
         </tr>
     `).join('');
@@ -203,7 +203,7 @@ window.abrirModalCategoria = function(id = null) {
 };
 
 window.editarCategoria = function(id) {
-    abrirModalCategoria(id);
+    window.abrirModalCategoria(id);
 };
 
 window.excluirCategoria = async function(id, nome) {
@@ -994,7 +994,7 @@ window.renderDRE = async function() {
     // Botão para adicionar categoria (se admin)
     if (currentUser?.role === 'admin') {
         html += `<tr><td colspan="14" style="padding:10px;text-align:center;">
-            <button class="btn btn-add" onclick="abrirModalCategoria()" style="font-size:12px;padding:6px 12px;">
+            <button class="btn btn-add" onclick="window.abrirModalCategoria()" style="font-size:12px;padding:6px 12px;">
                 + Adicionar Nova Categoria DRE
             </button>
         </td></tr>`;
