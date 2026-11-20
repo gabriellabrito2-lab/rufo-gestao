@@ -64,12 +64,12 @@ B_POSE_FINAL = br("9518", 13.0, 19.5, 1.6)
 B_EMBALAGEM = br("9513", 29.8, 33.5, 1.3)     # pulling the red dress out of the bag
 
 # ---- CTAs (her own voice) ----
-CTA_BLACK = sp("9515", 54.52, 60.50)    # "Gente, ele tem oferta de black, corre aqui no carrinho laranja e já garante o seu, que vestido lindo!"
+CTA_BLACK = sp("9515", 56.64, 60.50)    # "corre aqui no carrinho laranja e já garante o seu, que vestido lindo!" (sem "oferta de black")
 
-TICKER_VESTIDO = "  VESTIDO PRINCESA  •  TECIDO SUPLEX  •  NÃO É TRANSPARENTE  •  SUPER RODADO  •  TAMANHO MIDI  •  VÁRIAS CORES  •  OFERTA DE BLACK NO CARRINHO LARANJA  •"
+TICKER_VESTIDO = "  VESTIDO PRINCESA  •  TECIDO SUPLEX  •  NÃO É TRANSPARENTE  •  SUPER RODADO  •  TAMANHO MIDI  •  VÁRIAS CORES  •  TOCA NO CARRINHO LARANJA  •"
 CHECK_9515 = ("9515", [(35.32, "TECIDO SUPLEX"), (36.94, "NÃO É TRANSPARENTE"), (39.18, "MARCA A CINTURA"), (45.20, "RODADÍSSIMO"), (47.76, "TAMANHO MIDI")])
 
-CTA_TXT = ["TOCA NO CARRINHO LARANJA", "OFERTA DE BLACK"]
+CTA_TXT = ["TOCA NO CARRINHO LARANJA", "E GARANTE O SEU"]
 
 PLANS = [
     # ===== FALADOS: gancho falado + escrito -> problema -> solução -> carrinho =====
@@ -97,7 +97,7 @@ PLANS = [
          cta=CTA_BLACK, cta_text=CTA_TXT),
     dict(id="v07-alerta-achadinho", look="news", hook=["ACHADINHO DE NATAL", "QUE NÃO É TRANSPARENTE"], ticker=TICKER_VESTIDO,
          clips=[H_ENCONTREI, D_TECIDO, D_NAO_TRANSP, D_RODADISSIMO, L(D_ALTURA, "EU TENHO 1,63"), D_CORES, B_GIRO],
-         cta=CTA_BLACK, cta_text=["TOCA NO CARRINHO LARANJA", "ANTES QUE A OFERTA ACABE"]),
+         cta=CTA_BLACK, cta_text=["TOCA NO CARRINHO LARANJA", "E GARANTE O SEU"]),
     dict(id="v08-marido-aprovou", look="meme", hook=["SERÁ QUE O MARIDO", "APROVOU?"],
          clips=[H_MARIDO, U_APROVADO, L(B_TRANSICAO, "DEPOIS"), D_TECIDO, D_CINTURA, L(B_GIRO, "APROVADO"), D_ACHARAM],
          cta=CTA_BLACK, cta_text=["TOCA NO CARRINHO LARANJA", "E MANDA PRO SEU MARIDO"],
@@ -116,7 +116,7 @@ PLANS = [
          clips=[L(B_EMBALAGEM, "chegou..."), L(B_TRANSICAO, "e no corpo:"), L(B_GIRO, "rodadíssimo"), L(B_POSE_CINTURA, "não é transparente")],
          cta=B_POSE_FINAL, cta_text=["TOCA NO CARRINHO LARANJA", "tem várias cores"]),
     dict(id="v12-pov-princesa", look="aes", silent=True, hook_min=3.5, beat_max=3.0,
-         hook=["POV: vestido de princesa", "NO NATAL GASTANDO POUCO"],
+         hook=["POV: vestido de princesa", "PRO SEU NATAL"],
          clips=[B_VOLTA, L(B_GIRO, "super rodado"), L(B_POSE_CINTURA, "tecido suplex"), L(B_POSE_INTEIRO, "tamanho midi")],
          cta=B_POSE_FINAL, cta_text=CTA_TXT),
     # ===== UNBOXING DIVERTIDO =====
