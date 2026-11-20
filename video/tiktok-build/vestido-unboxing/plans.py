@@ -122,12 +122,12 @@ PLANS = [
     # ===== UNBOXING DIVERTIDO =====
     dict(id="u01-unboxing-black", look="fun", hook=["TUDO QUE EU COMPREI", "NA BLACK DO TIKTOK"],
          clips=[sp("9507", 0.76, 4.14), sp("9507", 10.96, 13.24),
-                L(sp("9508", 18.54, 23.08), "1. TRIPÉ"), sp("9508", 23.70, 28.20), L(sp("9508", 28.42, 33.28), "MENOS DE R$20"),
-                L(sp("9508", 39.06, 43.12), "MANUAL EM CHINÊS"), sp("9509", 2.78, 7.52), sp("9510", 5.66, 8.50), L(sp("9510", 13.68, 14.54), "APROVADO"),
-                L(sp("9511", 4.18, 7.86), "2. BABYLISS"), sp("9511", 12.20, 14.28), L(sp("9511", 26.64, 28.32), "PLAYSTATION DOS CABELOS"), L(sp("9511", 32.38, 34.72), "MENOS DE R$100"),
-                L(sp("9512", 18.16, 24.64), "3. FERRO A VAPOR"), sp("9512", 8.82, 10.90),
-                L(H_VERMELHO, "4. VESTIDO DE NATAL"), H_DEVOLVI, L(B_TRANSICAO, "NO CORPO"), D_ACINTURA,
-                L(sp("9514", 0.96, 2.62), "5. VESTIDO BRANCO"), sp("9514", 18.80, 24.64), L(sp("9514", 26.16, 27.78), "TEVE O AVAL"), L(sp("9514", 47.86, 50.42), "COMPREI NO M"),],
+                L(sp("9508", 18.54, 23.08), "1. TRIPÉ"), L(sp("9508", 28.42, 33.28), "MENOS DE R$20"),
+                L(sp("9508", 39.06, 43.12), "MANUAL EM CHINÊS"), L(br("9509", 2.8, 7.5, 2.0), "ATÉ 1,70M"), L(sp("9510", 13.68, 14.54), "APROVADO"),
+                L(sp("9511", 4.18, 7.86), "2. BABYLISS"), L(sp("9511", 26.64, 28.32), "PLAYSTATION DOS CABELOS"), L(sp("9511", 32.38, 34.72), "MENOS DE R$100"),
+                L(sp("9512", 18.16, 24.64), "3. FERRO A VAPOR"),
+                L(H_VERMELHO, "4. VESTIDO DE NATAL"), L(B_TRANSICAO, "NO CORPO"), D_ACINTURA,
+                L(sp("9514", 0.96, 2.62), "5. VESTIDO BRANCO"), L(sp("9514", 26.16, 27.78), "O MARIDO APROVOU"), L(sp("9514", 47.86, 50.42), "COMPREI NO M"),],
          cta=sp("9511", 29.54, 31.28), cta_text=["TOCA NO CARRINHO LARANJA", "TEM TUDO NO MEU CARRINHO"]),
 ]
 

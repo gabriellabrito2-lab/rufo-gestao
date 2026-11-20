@@ -58,7 +58,7 @@ STYLE_LINES = [
     S("AesCap", POP, 82, WHITE, BLACK, "&H70000000", ol=0, sh=3),
     S("AesLab", POP, 92, "&H00333333", WHITE, WHITE, bs=3, ol=16),
     # pov / native
-    S("PovText", POP, 76, WHITE, "&H00101010", "&H00101010", bs=3, ol=16, align=8),
+    S("PovText", POP, 88, WHITE, "&H00101010", "&H00101010", bs=3, ol=16, align=8),
     S("PovCap", POP, 74, WHITE, "&H00101010", "&H00101010", bs=3, ol=14),
     S("PovLab", POP, 80, "&H00101010", WHITE, WHITE, bs=3, ol=14),
     # girly
@@ -90,7 +90,7 @@ STYLE_LINES = [
     S("BubbleName", POP, 46, "&H0040A000", WHITE, WHITE, bs=1, ol=0, align=7),
 ]
 for nm, font, sz in (("classic", MONT, 82), ("meme", BANG, 104), ("news", ARCH, 70), ("cine", PLAY, 78),
-                     ("check", ANTON, 92), ("top3", BEBAS, 120), ("aes", POP, 66), ("pov", POP, 64),
+                     ("check", ANTON, 92), ("top3", BEBAS, 120), ("aes", POP, 66), ("pov", POP, 82),
                      ("girly", MARK, 84), ("split", MONT, 82), ("natal", MONT, 80), ("editorial", POP, 66), ("fun", BANG, 104)):
     it = -1 if font == PLAY else 0
     STYLE_LINES.append(S(f"Cta_{nm}", font, sz, WHITE, ORANGE, ORANGE, bold=it, italic=it, bs=3, ol=24))
@@ -201,7 +201,7 @@ LOOKS["editorial"] = dict(
              cta=[("shutter", 0.0, 0.7), ("chaching", 0.2, 0.6)]),
     music=("music_runway", 0.12))
 LOOKS["fun"] = dict(
-    motion="chaos", trans="flash", grade="eq=contrast=1.1:saturation=1.35", progress=YELLOW,
+    gap=0.3, motion="chaos", trans="flash", grade="eq=contrast=1.1:saturation=1.35", progress=YELLOW,
     hook=[("FunHook", 200, 0.0, r"\frz-3", 0), ("FunHook2", 370, 0.25, r"\frz3", 1)], hook_anim="shake",
     cap=dict(mode="word", style="MemeCap", y=1180, n=1, case="upper"),
     lab=dict(ANTES="FunLab", DEPOIS="FunLab", other="FunLab", y=560, rot=-6),

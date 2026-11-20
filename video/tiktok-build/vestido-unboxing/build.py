@@ -355,7 +355,7 @@ def render(plan):
             run(["ffmpeg", "-v", "error", "-y", "-ss", f"{a:.3f}", "-t", f"{b - a:.3f}", "-i", SRC(src), "-vf", vf, "-af", af, *ENC, "-t", f"{dur:.3f}", f])
             add_seg(f, dur, src=src, src_start=a, src_end=b, speed=sp, words=[], first_of_clip=True, broll=True)
         elif c["kind"] == "split":
-            (tsrc, top), (src, a, b) = c["top"], c["bot"]
+            (tsrc, top), bot = c["top"], c["bot"]; src, a, b = bot["src"], bot["a"], bot["b"]
             st, en, ws = subclips(src, a, b, 99)[0]
             dur = en - st
             fc = (f"[0:v]setpts=PTS-STARTPTS,fps={FPS},crop={W}:960:0:(ih-960)*0.40{',hue=s=0' if c.get('bw', True) else ''}[t];"
