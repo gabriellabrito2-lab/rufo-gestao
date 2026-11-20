@@ -178,6 +178,20 @@ def src_to_out(segs, src, t):
     return None
 
 
+STYLE_INFO = {ln.split(",")[0][7:]: (ln.split(",")[1], float(ln.split(",")[2])) for ln in STYLE_LINES}
+
+
+def fit(text, style, maxw=960):
+    """Scale tag that keeps the widest line inside the safe width."""
+    font, size = STYLE_INFO.get(style, ("", 80))
+    k = 0.44 if font in ("Anton", "Bebas Neue") else 0.5 if font in ("Bangers", "Playfair Display", "Pacifico") else 0.6
+    longest = max(len(x) for x in text.replace(r"\N", "|").split("|"))
+    w = longest * size * k
+    if w <= maxw: return ""
+    sc = int(100 * maxw / w)
+    return r"{\fscx%d\fscy%d}" % (sc, sc)
+
+
 def build_ass(plan, look, lname, segs, total, cta_start, label_marks, extras_sfx):
     L = ["[Script Info]\nScriptType: v4.00+\nPlayResX: %d\nPlayResY: %d\nWrapStyle: 2\nScaledBorderAndShadow: yes\n" % (W, H),
          "[V4+ Styles]\nFormat: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding",
@@ -203,16 +217,26 @@ def build_ass(plan, look, lname, segs, total, cta_start, label_marks, extras_sfx
     if look.get("frame"):
         L.append(ev(0, total, r"{\pos(0,0)\1c&HFFFFFF&\bord0\p1}" + " ".join([rect(0, 0, W, 28), rect(0, H - 28, W, H), rect(0, 0, 28, H), rect(W - 28, 0, W, H)]) + r"{\p0}", "Draw", 5))
     # hook
-    hook_end = max(2.8, segs[0]["clip_end"])
+    hook_end = max(plan.get("hook_min", 2.8), segs[0]["clip_end"])
     anim = ANIM.get(look.get("hook_anim", "pop"), "")
+    QUICK = r"\fscx90\fscy90\t(0,120,\fscx100\fscy100)"
+    if plan.get("instant_hook"):
+        anim = QUICK + (anim[len(POP_IN):] if anim.startswith(POP_IN) else "")
     for sty, y, delay, tags, li in look["hook"]:
+        if plan.get("instant_hook"): delay = 0.0
         text = r"\N".join(plan["hook"]) if li == "both" else plan["hook"][li]
         if plan.get("hook_low") and not (li == "both" and lname == "split"):
             y = {0: 1330, 1: 1465, "both": 1400}[li]
-        if look.get("hook_anim") == "slide":
+        if look.get("hook_anim") == "slide" and not plan.get("instant_hook"):
             L.append(ev(delay, hook_end, r"{\move(-700,%d,540,%d,0,220)%s}" % (y, y, tags) + text, sty, 6))
         else:
-            L.append(ev(delay, hook_end, r"{\pos(540,%d)%s%s}" % (y, anim, tags) + text, sty, 6))
+            f_ = fit(text, sty)
+            if f_:
+                sc = f_[6:f_.index("\\", 6)]
+                anim_f = anim.replace("fscx100", "fscx" + sc).replace("fscy100", "fscy" + sc).replace("fscx112", "fscx" + sc).replace("fscy112", "fscy" + sc)
+                L.append(ev(delay, hook_end, r"{\pos(540,%d)\fscx%s\fscy%s%s%s}" % (y, sc, sc, anim_f, tags) + text, sty, 6))
+            else:
+                L.append(ev(delay, hook_end, r"{\pos(540,%d)%s%s}" % (y, anim, tags) + text, sty, 6))
     # transitions drawn in ASS
     tr = look["trans"]
     for s in segs[1:]:
@@ -248,7 +272,9 @@ def build_ass(plan, look, lname, segs, total, cta_start, label_marks, extras_sfx
         col = ""
         if is_depois(text) and lab.get("depois_color"): col = r"\3c%s&" % lab["depois_color"]
         if is_antes(text) and lab.get("antes_color"): col = r"\3c%s&" % lab["antes_color"]
-        L.append(ev(t0 + 0.05, min(t1, t0 + 2.4), r"{\pos(540,%d)\frz%d%s%s}" % (ly, lab["rot"], col, POP_IN) + text, sty, 7))
+        f_ = fit(text, sty); sc = f_[6:f_.index("\\", 6)] if f_ else "100"
+        pin = POP_IN.replace("fscx100", "fscx" + sc).replace("fscy100", "fscy" + sc).replace("fscx112", "fscx" + str(int(int(sc) * 1.1))).replace("fscy112", "fscy" + str(int(int(sc) * 1.1)))
+        L.append(ev(t0 + 0.05, min(t1, t0 + plan.get("beat_max", 2.4)), r"{\pos(540,%d)\frz%d%s%s}" % (ly, lab["rot"], col, pin) + text.replace("|", r"\N"), sty, 7))
     # checklist + stamp
     if look.get("checklist"):
         mapped = [(src_to_out(segs, plan["check"][0], a), txt) for a, txt in plan.get("check", (None, []))[1]]
@@ -283,7 +309,8 @@ def build_ass(plan, look, lname, segs, total, cta_start, label_marks, extras_sfx
         for w in s["words"]:
             st = s["off"] + (w["start"] - s["src_start"]); en = s["off"] + (w["end"] - s["src_start"])
             if w["word"]: timed.append((max(st, s["off"]), en, w["word"]))
-    L += captions(timed, look["cap"])
+    if not plan.get("no_caps"):
+        L += captions(timed, look["cap"])
     # CTA
     c1, c2 = plan["cta_text"]
     pulse = "".join(r"\t(%d,%d,\fscx108\fscy108)\t(%d,%d,\fscx100\fscy100)" % (300 + 600 * k, 600 + 600 * k, 600 + 600 * k, 900 + 600 * k) for k in range(8))
@@ -313,6 +340,8 @@ def render(plan):
         f = os.path.join(TMP, f"{pid}-{n:02d}.mp4")
         if c["kind"] == "broll":
             src = c["src"]; a, b = c["a"], c["b"]; sp = c.get("speed", 1.0)
+            is_cta = ci == len(clips) - 1
+            if is_cta: cta_start = off
             if look.get("slowmo") and c.get("slow_ok", True):
                 b = min(b, a + 1.8); sp = 0.6
             dur = (b - a) / sp
@@ -321,6 +350,8 @@ def render(plan):
             vf = f"setpts=(PTS-STARTPTS)/{sp}," + vchain(z, sh)
             vol = 0 if c.get("mute", True) else 0.45
             af = f"asetpts=PTS-STARTPTS,{tempo_chain(sp)},volume={vol},aresample=44100,afade=t=in:d=0.05,afade=t=out:st={max(0, dur - 0.08):.3f}:d=0.08"
+            if is_cta:
+                vf += f",tpad=stop_mode=clone:stop_duration={HOLD_END}"; af += f",apad=pad_dur={HOLD_END}"; dur += HOLD_END
             run(["ffmpeg", "-v", "error", "-y", "-ss", f"{a:.3f}", "-t", f"{b - a:.3f}", "-i", SRC(src), "-vf", vf, "-af", af, *ENC, "-t", f"{dur:.3f}", f])
             add_seg(f, dur, src=src, src_start=a, src_end=b, speed=sp, words=[], first_of_clip=True, broll=True)
         elif c["kind"] == "split":
@@ -381,10 +412,12 @@ def render(plan):
             sfx.append(("whoosh", max(0, t0 - 0.15), 0.5))
     sfx += [(nm, max(0, cta_start + o), v) for nm, o, v in sx["cta"]]
     sfx += extras_sfx
+    if plan.get("silent"):
+        sfx = []
     inputs = ["-i", body]
     fc = ["[0:a]loudnorm=I=-14:TP=-1.5:LRA=11,aresample=44100[v]"]
     mix = ["[v]"]; k0 = 1
-    if look.get("music"):
+    if look.get("music") and not plan.get("silent"):
         mname, mvol = look["music"]
         inputs += ["-stream_loop", "-1", "-i", os.path.join(SFX, mname + ".wav")]
         fc.append(f"[1:a]atrim=0:{total:.3f},volume={mvol},afade=t=out:st={total - 1.2:.3f}:d=1.2[m]"); mix.append("[m]"); k0 = 2

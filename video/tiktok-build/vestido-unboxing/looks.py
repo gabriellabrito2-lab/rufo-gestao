@@ -38,7 +38,7 @@ STYLE_LINES = [
     S("CineHook", PLAY, 112, GOLD, BLACK, "&H80000000", bold=-1, italic=-1, ol=0, sh=3, align=8),
     S("CineSub", POP, 58, WHITE, BLACK, "&H80000000", ol=0, sh=2, align=8, sp=8),
     S("CineCap", POP, 74, WHITE, BLACK, "&H90000000", ol=0, sh=3),
-    S("CineLab", PLAY, 84, GOLD, BLACK, "&H80000000", bold=-1, italic=-1, ol=0, sh=3),
+    S("CineLab", PLAY, 104, GOLD, BLACK, "&H80000000", bold=-1, italic=-1, ol=0, sh=3),
     # checklist
     S("ChkHook", ANTON, 150, WHITE, BLACK, BLACK, ol=7, sh=4, align=8),
     S("ChkHook2", ANTON, 118, WHITE, GREEN, GREEN, bs=3, ol=18, align=8),
@@ -56,16 +56,16 @@ STYLE_LINES = [
     S("AesHook", PLAY, 124, WHITE, BLACK, "&H60000000", bold=-1, italic=-1, ol=0, sh=3, align=8),
     S("AesHook2", POP, 62, WHITE, BLACK, "&H60000000", ol=0, sh=2, align=8, sp=6),
     S("AesCap", POP, 82, WHITE, BLACK, "&H70000000", ol=0, sh=3),
-    S("AesLab", POP, 76, "&H00333333", WHITE, WHITE, bs=3, ol=16),
+    S("AesLab", POP, 92, "&H00333333", WHITE, WHITE, bs=3, ol=16),
     # pov / native
     S("PovText", POP, 76, WHITE, "&H00101010", "&H00101010", bs=3, ol=16, align=8),
     S("PovCap", POP, 74, WHITE, "&H00101010", "&H00101010", bs=3, ol=14),
-    S("PovLab", POP, 74, "&H00101010", WHITE, WHITE, bs=3, ol=14),
+    S("PovLab", POP, 80, "&H00101010", WHITE, WHITE, bs=3, ol=14),
     # girly
     S("GirlHook", PACI, 108, WHITE, HOTPINK, HOTPINK, ol=8, sh=4, align=8),
     S("GirlHook2", MARK, 92, HOTPINK, WHITE, WHITE, ol=7, sh=3, align=8),
     S("GirlCap", MARK, 88, WHITE, HOTPINK, HOTPINK, ol=7, sh=3),
-    S("GirlLab", MARK, 88, WHITE, HOTPINK, HOTPINK, bs=3, ol=18),
+    S("GirlLab", MARK, 96, WHITE, HOTPINK, HOTPINK, bs=3, ol=18),
     # split
     S("SplitHook", MONT, 110, WHITE, BLACK, BLACK, ol=8, sh=4, align=5),
     S("SplitTag", MONT, 76, WHITE, "&H003030E0", "&H003030E0", bs=3, ol=16, align=7),
@@ -77,10 +77,10 @@ STYLE_LINES = [
     S("NatalCap", MONT, 84, ol=7, sh=4),
     S("NatalLab", MONT, 90, WHITE, "&H002020C8", "&H002020C8", bs=3, ol=20),
     # editorial
-    S("EdHook", PLAY, 140, WHITE, BLACK, "&H70000000", bold=-1, italic=-1, ol=0, sh=4, align=8),
-    S("EdKick", POP, 46, WHITE, BLACK, "&H70000000", ol=0, sh=2, align=8, sp=14),
+    S("EdHook", PLAY, 160, WHITE, BLACK, "&H70000000", bold=-1, italic=-1, ol=0, sh=4, align=8),
+    S("EdKick", POP, 58, WHITE, BLACK, "&H70000000", ol=0, sh=2, align=8, sp=14),
     S("EdCap", POP, 66, WHITE, BLACK, "&H80000000", ol=0, sh=3, sp=3),
-    S("EdLab", POP, 64, BLACK, WHITE, WHITE, bs=3, ol=16, sp=6),
+    S("EdLab", POP, 86, BLACK, WHITE, WHITE, bs=3, ol=16, sp=6),
     # fun (unboxing)
     S("FunLab", BANG, 130, BLACK, YELLOW, YELLOW, bs=3, ol=20),
     S("FunHook", BANG, 150, WHITE, "&H00FF7F00", BLACK, ol=10, sh=6, align=8),
