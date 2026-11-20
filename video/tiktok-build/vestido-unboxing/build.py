@@ -318,7 +318,7 @@ def build_ass(plan, look, lname, segs, total, cta_start, label_marks, extras_sfx
     L.append(ev(cta_start + 0.3, total, r"{\pos(540,890)%s}" % POP_IN + c2, f"CtaS_{lname}", 8))
     bounce = "".join(r"\t(%d,%d,\fscx112\fscy112)\t(%d,%d,\fscx100\fscy100)" % (250 * k, 250 * k + 125, 250 * k + 125, 250 * k + 250) for k in range(20))
     L.append(ev(cta_start + 0.2, total, r"{\move(250,1420,190,1500,0,400)" + bounce + "}" + ARROW, "Draw", 8))
-    L.append(ev(cta_start + 0.2, total, r"{\an4\pos(330,1580)}PRODUTO AQUI", f"CtaS_{lname}", 8))
+    L.append(ev(cta_start + 0.2, total, r"{\an4\pos(330,1580)}" + plan.get("arrow_text", "PRODUTO AQUI"), f"CtaS_{lname}", 8))
     return "\n".join(L) + "\n"
 
 

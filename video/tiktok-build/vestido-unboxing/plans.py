@@ -128,7 +128,7 @@ PLANS = [
                 L(sp("9512", 18.16, 24.64), "3. FERRO A VAPOR"),
                 L(H_VERMELHO, "4. VESTIDO DE NATAL"), L(B_TRANSICAO, "NO CORPO"), D_ACINTURA,
                 L(sp("9514", 0.96, 2.62), "5. VESTIDO BRANCO"), L(sp("9514", 26.16, 27.78), "O MARIDO APROVOU"), L(sp("9514", 47.86, 50.42), "COMPREI NO M"),],
-         cta=sp("9511", 29.54, 31.28), cta_text=["TOCA NO CARRINHO LARANJA", "TEM TUDO NO MEU CARRINHO"]),
+         cta=sp("9511", 29.54, 31.28), cta_text=["TEM TUDO NA MINHA VITRINE", "CORRE LÁ E GARANTE O SEU"], arrow_text="VITRINE NO MEU PERFIL"),
 ]
 
 for _p in PLANS:
